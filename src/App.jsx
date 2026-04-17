@@ -1,119 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import Button from './components/atoms/Button'
+import SectionWrapper from './components/molecules/SectionWrapper'
+import Footer from './components/organisms/Footer'
+import HeroSection from './components/organisms/HeroSection'
+import Navbar from './components/organisms/Navbar'
+import siteContent from './content/siteContent'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { navbar, hero, services, approach, footer } = siteContent
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+      <Navbar brand={navbar.brand} cta={navbar.cta} navLinks={navbar.navLinks} />
+      <main>
+        <HeroSection
+          description={hero.description}
+          eyebrow={hero.eyebrow}
+          primaryCta={hero.primaryCta}
+          secondaryCta={hero.secondaryCta}
+          title={hero.title}
+        />
+
+        <SectionWrapper bgClassName="bg-white" id="services" intro={services.intro} title={services.title}>
+          <div className="grid gap-6 md:grid-cols-3">
+            {services.cards.map((service) => (
+              <article className="rounded-lg border border-[#0B1F3A]/10 bg-[#F8F9FB] p-6" key={service.title}>
+                <h3 className="mb-3 text-xl font-semibold tracking-wide text-[#0B1F3A]">{service.title}</h3>
+                <p className="text-sm leading-7 text-[#1A1A1A]/85">{service.description}</p>
+              </article>
+            ))}
+          </div>
+        </SectionWrapper>
+
+        <SectionWrapper bgClassName="bg-[#F8F9FB]" id="approach" intro={approach.intro} title={approach.title}>
+          <ol className="space-y-4">
+            {approach.points.map((point) => (
+              <li className="rounded-lg border border-[#0B1F3A]/10 bg-white p-5 text-sm leading-7 text-[#1A1A1A]" key={point}>
+                {point}
+              </li>
+            ))}
+          </ol>
+        </SectionWrapper>
+
+        <SectionWrapper bgClassName="bg-white" id="about" title="Ready to align strategy with evidence?">
+          <p className="max-w-3xl text-base leading-7 text-[#1A1A1A]/85">
+            RMCL helps organizations navigate complexity with credible analysis and practical advisory support.
+            Let’s design a consulting engagement that is tailored to your context and goals.
           </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+          <div className="mt-8">
+            <Button href="#contact">Start a Conversation</Button>
+          </div>
+        </SectionWrapper>
+      </main>
+      <Footer columns={footer.columns} legalText={footer.legalText} />
     </>
   )
 }
