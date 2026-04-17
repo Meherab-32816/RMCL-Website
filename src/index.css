@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+:root {
+  color: #1a1a1a;
+  background-color: #f8f9fb;
+  font-family: Inter, 'Segoe UI', Roboto, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #f8f9fb;
+  color: #1a1a1a;
+}
+
+a {
+  text-decoration: none;
+}
