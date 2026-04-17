@@ -430,6 +430,7 @@ a {
   transform: scale(0.97);
   pointer-events: none;
   position: absolute;
+  visibility: hidden;
 }
 
 /* Footer */

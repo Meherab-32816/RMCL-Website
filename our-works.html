@@ -109,8 +109,9 @@
         .then((html) => {
           footerSlot.innerHTML = html;
         })
-        .catch(() => {
-          footerSlot.innerHTML = '';
+        .catch((error) => {
+          console.error('Failed to load footer.partial.html', error);
+          footerSlot.innerHTML = '<footer class="site-footer"><div class="footer-bottom">Research and Management Consultants Ltd. All Rights Reserved © 2026.</div></footer>';
         });
     </script>
   </body>
