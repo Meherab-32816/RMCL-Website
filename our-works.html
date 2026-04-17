@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RMCL | Measurable Impact</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-cream">
+    <main class="impact-matrix container">
+      <header class="page-header">
+        <h1>Measurable Impact: A Portfolio of Evidence.</h1>
+      </header>
+
+      <section aria-label="Impact Filters and Portfolio">
+        <div class="filter-bar" role="tablist" aria-label="Impact Categories">
+          <button class="filter-btn is-active" type="button" data-filter="all">All</button>
+          <button class="filter-btn" type="button" data-filter="health">Health</button>
+          <button class="filter-btn" type="button" data-filter="climate">Climate</button>
+          <button class="filter-btn" type="button" data-filter="education">Education</button>
+          <button class="filter-btn" type="button" data-filter="strategic-plans">Strategic Plans</button>
+        </div>
+
+        <div class="impact-grid" id="impact-grid">
+          <article class="impact-card" data-category="health">
+            <header>Save the Children</header>
+            <div class="impact-card-body">Baseline Study of Collective Impact on Future Work</div>
+            <footer>
+              <time datetime="2023-01">Jan 2023</time> - <time datetime="2023-12">Dec 2023</time> ·
+              <a href="#" aria-label="Technical Abstract for Save the Children project">Technical Abstract</a>
+            </footer>
+          </article>
+
+          <article class="impact-card" data-category="climate">
+            <header>UNDP</header>
+            <div class="impact-card-body">Climate Resilience Needs Assessment for Coastal Districts</div>
+            <footer>
+              <time datetime="2022-03">Mar 2022</time> - <time datetime="2022-11">Nov 2022</time> ·
+              <a href="#" aria-label="Technical Abstract for UNDP project">Technical Abstract</a>
+            </footer>
+          </article>
+
+          <article class="impact-card" data-category="education">
+            <header>BRAC</header>
+            <div class="impact-card-body">Education Access Mapping for Marginalized Communities</div>
+            <footer>
+              <time datetime="2021-07">Jul 2021</time> - <time datetime="2022-04">Apr 2022</time> ·
+              <a href="#" aria-label="Technical Abstract for BRAC project">Technical Abstract</a>
+            </footer>
+          </article>
+
+          <article class="impact-card" data-category="strategic-plans">
+            <header>Ministry of Health</header>
+            <div class="impact-card-body">Five-Year Strategic Implementation Plan Development</div>
+            <footer>
+              <time datetime="2024-02">Feb 2024</time> - <span aria-label="Present">Present</span> ·
+              <a href="#" aria-label="Technical Abstract for Ministry of Health project">Technical Abstract</a>
+            </footer>
+          </article>
+
+          <article class="impact-card" data-category="health">
+            <header>WHO</header>
+            <div class="impact-card-body">Regional HIV Prevention Program Effectiveness Review</div>
+            <footer>
+              <time datetime="2020-05">May 2020</time> - <time datetime="2021-12">Dec 2021</time> ·
+              <a href="#" aria-label="Technical Abstract for WHO project">Technical Abstract</a>
+            </footer>
+          </article>
+
+          <article class="impact-card" data-category="climate strategic-plans">
+            <header>UNICEF</header>
+            <div class="impact-card-body">Child-Centered Climate Adaptation Policy Strategy</div>
+            <footer>
+              <time datetime="2023-08">Aug 2023</time> - <span aria-label="Present">Present</span> ·
+              <a href="#" aria-label="Technical Abstract for UNICEF project">Technical Abstract</a>
+            </footer>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-slot" data-partial="footer.partial.html"></div>
+
+    <script>
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.impact-card');
+
+      const applyFilter = (filter) => {
+        cards.forEach((card) => {
+          const categories = card.dataset.category.split(' ');
+          const show = filter === 'all' || categories.includes(filter);
+          card.classList.toggle('is-hidden', !show);
+        });
+      };
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          filterButtons.forEach((btn) => btn.classList.remove('is-active'));
+          button.classList.add('is-active');
+          applyFilter(button.dataset.filter);
+        });
+      });
+
+      applyFilter('all');
+
+      const footerSlot = document.getElementById('footer-slot');
+      fetch(footerSlot.dataset.partial)
+        .then((res) => res.text())
+        .then((html) => {
+          footerSlot.innerHTML = html;
+        })
+        .catch((error) => {
+          console.error('Failed to load footer.partial.html', error);
+          footerSlot.innerHTML = '<footer class="site-footer"><div class="footer-bottom">Research and Management Consultants Ltd. All Rights Reserved © 2026.</div></footer>';
+        });
+    </script>
+  </body>
+</html>

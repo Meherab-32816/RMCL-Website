@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RMCL | Technical Capabilities & Strategic Pillars</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-cream">
+    <main class="capability-architecture container">
+      <header class="page-header">
+        <h1>Technical Capabilities &amp; Strategic Pillars.</h1>
+      </header>
+
+      <section class="tab-rail-layout" aria-label="Capabilities Pillars">
+        <aside class="tab-rail" role="tablist" aria-orientation="vertical" aria-label="Strategic Pillars">
+          <button class="pillar-tab is-active" role="tab" aria-selected="true" data-pillar="pillar-01">01 Research &amp; Analytics</button>
+          <button class="pillar-tab" role="tab" aria-selected="false" data-pillar="pillar-02">02 Strategic Advisory</button>
+          <button class="pillar-tab" role="tab" aria-selected="false" data-pillar="pillar-03">03 Systems &amp; ICT4D</button>
+          <button class="pillar-tab" role="tab" aria-selected="false" data-pillar="pillar-04">04 Specialized Social Research</button>
+        </aside>
+
+        <article class="pillar-content" id="pillar-content" aria-live="polite">
+          <h2 id="pillar-name">01 Research &amp; Analytics</h2>
+          <div class="service-tabs" id="service-tabs" role="tablist" aria-label="Service Details"></div>
+          <section class="service-panel" id="service-panel"></section>
+        </article>
+      </section>
+    </main>
+
+    <div id="footer-slot" data-partial="footer.partial.html"></div>
+
+    <script>
+      const capabilityData = {
+        'pillar-01': {
+          name: '01 Research & Analytics',
+          services: [
+            {
+              label: 'Public Health Analytics',
+              title: 'Public Health & Epidemiological Analytics',
+              description:
+                'Providing rigorous longitudinal analysis and health economics evaluations for international NGOs and governmental bodies.',
+              features: ['Situational Assessments', 'KAP Surveys', 'HIV Prevention Mapping']
+            },
+            {
+              label: 'Program Evaluation',
+              title: 'Monitoring, Evaluation & Learning',
+              description:
+                'Designing evidence-centered evaluation frameworks that quantify outcomes and improve social intervention quality.',
+              features: ['Baseline/Endline Studies', 'Mixed-Methods Evaluation', 'Impact Dashboards']
+            }
+          ]
+        },
+        'pillar-02': {
+          name: '02 Strategic Advisory',
+          services: [
+            {
+              label: 'Policy Intelligence',
+              title: 'Policy & Institutional Advisory',
+              description:
+                'Delivering strategy design support for public institutions, donor portfolios, and implementation roadmaps.',
+              features: ['Strategic Plans', 'Policy Briefing Notes', 'Governance Assessments']
+            }
+          ]
+        },
+        'pillar-03': {
+          name: '03 Systems & ICT4D',
+          services: [
+            {
+              label: 'Digital Systems',
+              title: 'Data Systems Engineering for ICT4D',
+              description:
+                'Building resilient data and reporting systems that strengthen field delivery, accountability, and decision cycles.',
+              features: ['Platform Design', 'Interoperability Pipelines', 'Capacity Transfer Modules']
+            }
+          ]
+        },
+        'pillar-04': {
+          name: '04 Specialized Social Research',
+          services: [
+            {
+              label: 'Social Insight',
+              title: 'Specialized Social and Behavioral Research',
+              description:
+                'Executing culturally grounded studies to inform behavior change, social protection, and inclusion strategies.',
+              features: ['Qualitative Inquiry', 'Behavioral Diagnostics', 'Community-Centered Insights']
+            }
+          ]
+        }
+      };
+
+      const pillarButtons = document.querySelectorAll('.pillar-tab');
+      const pillarName = document.getElementById('pillar-name');
+      const serviceTabs = document.getElementById('service-tabs');
+      const servicePanel = document.getElementById('service-panel');
+
+      const renderServicePanel = (service) => {
+        servicePanel.innerHTML = `
+          <h3>${service.title}</h3>
+          <p>${service.description}</p>
+          <ul>
+            ${service.features.map((feature) => `<li>${feature}</li>`).join('')}
+          </ul>
+        `;
+      };
+
+      const renderPillar = (pillarId) => {
+        const pillar = capabilityData[pillarId];
+        pillarName.textContent = pillar.name;
+        serviceTabs.innerHTML = '';
+
+        pillar.services.forEach((service, index) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `service-tab${index === 0 ? ' is-active' : ''}`;
+          btn.setAttribute('role', 'tab');
+          btn.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+          btn.textContent = service.label;
+          btn.addEventListener('click', () => {
+            serviceTabs.querySelectorAll('.service-tab').forEach((tab) => {
+              tab.classList.remove('is-active');
+              tab.setAttribute('aria-selected', 'false');
+            });
+            btn.classList.add('is-active');
+            btn.setAttribute('aria-selected', 'true');
+            renderServicePanel(service);
+          });
+          serviceTabs.appendChild(btn);
+        });
+
+        renderServicePanel(pillar.services[0]);
+      };
+
+      pillarButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          pillarButtons.forEach((btn) => {
+            btn.classList.remove('is-active');
+            btn.setAttribute('aria-selected', 'false');
+          });
+          button.classList.add('is-active');
+          button.setAttribute('aria-selected', 'true');
+          renderPillar(button.dataset.pillar);
+        });
+      });
+
+      renderPillar('pillar-01');
+
+      const footerSlot = document.getElementById('footer-slot');
+      fetch(footerSlot.dataset.partial)
+        .then((res) => res.text())
+        .then((html) => {
+          footerSlot.innerHTML = html;
+        })
+        .catch((error) => {
+          console.error('Failed to load footer.partial.html', error);
+          footerSlot.innerHTML = '<footer class="site-footer"><div class="footer-bottom">Research and Management Consultants Ltd. All Rights Reserved © 2026.</div></footer>';
+        });
+    </script>
+  </body>
+</html>
